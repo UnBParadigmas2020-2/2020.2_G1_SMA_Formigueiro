@@ -17,14 +17,16 @@ Paradigmas:
 # NomeDoProjeto
 
 **Disciplina**: FGA0210 - PARADIGMAS DE PROGRAMAÇÃO - T01 <br>
-**Nro do Grupo**: XX<br>
-**Paradigma**: XXXXXXXXXX<br>
+**Nro do Grupo**: 01<br>
+**Paradigma**: SMA<br>
 
 ## Alunos
 |Matrícula | Aluno |
 | -- | -- |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
+| 15/0009011  |  Elias Bernardo |
+| 19/0106565  |  Fernando Miranda Calil |
+| 15/0008228  |  Daniel Marques Rangel |
+| 16/0132550  |  Lorrany dos Santos Azevedo |
 
 ## Sobre 
 Descreva o seu projeto em linhas gerais. 
