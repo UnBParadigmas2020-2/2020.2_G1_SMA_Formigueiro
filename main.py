@@ -1,25 +1,58 @@
-from pade.misc.utility import display_message, start_loop
+from pade.misc.utility import display_message, start_loop, call_later
 from pade.core.agent import Agent
+from pade.acl.messages import ACLMessage
 from pade.acl.aid import AID
+from pade.acl.filters import Filter
 from sys import argv
 
+f = Filter()
+f.performative = ACLMessage.INFORM
 
-class AgenteHelloWorld(Agent):
+class Remetente(Agent):
     def __init__(self, aid):
-        super(AgenteHelloWorld, self).__init__(aid=aid)
-        display_message(self.aid.localname, 'Hello World!')
+        super(Remetente, self).__init__(aid=aid, debug=False)
+
+    def on_start(self):
+        super(Remetente, self).on_start()
+        display_message(self.aid.localname, 'Enviando Mensagem...')
+        call_later(8.0, self.sending_message)
+
+    def sending_message(self):
+        message = ACLMessage(ACLMessage.INFORM)
+        message.add_receiver(AID('destinatario'))
+        message.set_content('Ola')
+        self.send(message)
+
+    def react(self, message):
+        super(Remetente, self).react(message)
+        if f.filter(message):
+            display_message(self.aid.localname,
+                            'Mensagem recebida from {}'.format(message.sender.name))
+
+
+class Destinatario(Agent):
+    def __init__(self, aid):
+        super(Destinatario, self).__init__(aid=aid, debug=False)
+
+    def react(self, message):
+        super(Destinatario, self).react(message)
+        if f.filter(message):
+            display_message(self.aid.localname, f'content: {message.content}')
+            display_message(self.aid.localname,
+                            f'Mensagem recebida from {message.sender.name}')
 
 
 if __name__ == '__main__':
 
-    agents_per_process = 3
-    c = 0
     agents = list()
-    for i in range(agents_per_process):
-        port = int(argv[1]) + c
-        agent_name = 'agente_hello_{}@localhost:{}'.format(port, port)
-        agente_hello = AgenteHelloWorld(AID(name=agent_name))
-        agents.append(agente_hello)
-        c += 1000
+    port = int(argv[1])
+    destinatario_agent = Destinatario(
+        AID(name='destinatario@localhost:{}'.format(port)))
+    agents.append(destinatario_agent)
+
+    port += 1
+    remetente_agent = Remetente(
+        AID(name='remetente@localhost:{}'.format(port)))
+    agents.append(remetente_agent)
 
     start_loop(agents)
