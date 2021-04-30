@@ -15,14 +15,15 @@ class ComportTemporal(TimedBehaviour):
         super(ComportTemporal, self).on_time()
         a = self.agent.position
         a = [a-11, a-10, a-9, a-1, a+1, a+11, a+10, a+9]
+        possible_paths = []
         for index in a:
-            if self.agent.grid[index][1] > 0:
-                a.remove(index)
-        print('Possiveis caminhos: ')
-        print(a)
-        self.agent.grid[self.agent.position] += [0,1,0]
-        self.agent.position = choice(a)
-        display_message(self.agent.aid.localname, self.agent.grid[self.agent.position])
+            if self.agent.grid[index][1] < 1:
+                possible_paths.append(index)
+        print('Possiveis caminhos: ' + str(possible_paths))
+        if len(possible_paths) > 0:
+            self.agent.grid[self.agent.position] += [0,1,0]
+            self.agent.position = choice(possible_paths)
+            display_message(self.agent.aid.localname, self.agent.grid[self.agent.position])
 
 
 class Ant(Agent):
@@ -31,7 +32,7 @@ class Ant(Agent):
 
     def __init__(self, aid):
         super(Ant, self).__init__(aid=aid)
-        comp_temp = ComportTemporal(self, 1)
+        comp_temp = ComportTemporal(self, .1)
 
         self.behaviours.append(comp_temp)
 
