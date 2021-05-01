@@ -37,7 +37,7 @@ class Ant(Agent):
             for pos_x in range(3):
                 for pos_y in range(3):
                     if [(self.current_pos[0] -1) + pos_x, (self.current_pos[1] -1) + pos_y] == Grids().initial_position:
-                        find_home = [(self.current_pos[0] -1) + pos_x, (self.current_pos[1] -1) + pos_y]
+                        find_home = [(self.current_pos[0] - 1) + pos_x, (self.current_pos[1] -1) + pos_y]
                         display_message(self.aid.localname, "Achei o formigueiro")
                         break
 
@@ -50,16 +50,16 @@ class Ant(Agent):
                     })
 
             temp_to_food = Grids().grid_to_food
-            temp_to_food[self.last_pos[0], self.last_pos[1]] += 1
+            temp_to_food[self.current_pos[0], self.current_pos[1]] += 1
             Grids().grid_to_food = temp_to_food
-                    
+
             self.last_pos = self.current_pos
 
-            
+
             if find_home:
                 self.carrying = False
                 self.current_pos = find_home
-
+ 
             else:
                 to_home_path.sort(key=lambda lst: lst['value'], reverse=True)
                 self.current_pos = to_home_path[0]["coordinates"]
@@ -88,6 +88,7 @@ class Ant(Agent):
                     })
 
 
+            #display_message(self.aid.localname, f"Home path possui {len(to_food_path)} elementos : {(to_food_path)} last position: {self.last_pos}")
 
             temp_to_home = Grids().grid_to_home
             temp_to_home[self.last_pos[0], self.last_pos[1]] += 1
@@ -106,7 +107,7 @@ class Ant(Agent):
             else:
                 to_home_path.sort(key=lambda lst: lst['value'])
                 no_pheromones = list(filter(lambda lst: lst['value'] == 0, to_home_path))
-                
+
                 if len(no_pheromones) > 0:
                     self.current_pos = choice(no_pheromones)["coordinates"]
 
