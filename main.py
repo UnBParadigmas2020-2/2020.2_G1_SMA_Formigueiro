@@ -62,7 +62,6 @@ class Ant(Agent):
             return self.food_position
 
 
-
 if __name__ == '__main__':
 
     grid = np.column_stack((np.arange(1000).reshape(1000,1),np.zeros((1000,2),dtype=int)))
