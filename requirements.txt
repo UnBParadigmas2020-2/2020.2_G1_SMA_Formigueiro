@@ -1,3 +1,4 @@
 pade==2.2.4
 numpy==1.20.2
 singleton-decorator==1.0.0
+pygame==2.0.1

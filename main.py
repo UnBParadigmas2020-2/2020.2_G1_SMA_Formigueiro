@@ -3,9 +3,10 @@ from pade.core.agent import Agent
 from random import choice
 from pade.acl.aid import AID
 from pade.behaviours.protocols import TimedBehaviour
+from src.agents.Canvas import CanvasAgent
 from sys import argv
 import numpy as np
-
+import pygame
 
 
 class ComportTemporal(TimedBehaviour):
@@ -68,7 +69,10 @@ if __name__ == '__main__':
     agents_per_process = 10
     food_position = 769
     c = 0
-    agents = list()
+    agents = []
+    agents.append(CanvasAgent(AID(name="Canvas_Agent")))
+    c += 1000
+
     for i in range(agents_per_process):
         port = int(argv[1]) + c
         agent_name = f'Ant_{i}'
