@@ -52,13 +52,14 @@ class Ant(Agent):
             temp_to_food = Grids().grid_to_food
             temp_to_food[self.last_pos[0], self.last_pos[1]] += 1
             Grids().grid_to_food = temp_to_food
-
+                    
             self.last_pos = self.current_pos
 
+            
             if find_home:
                 self.carrying = False
                 self.current_pos = find_home
-                self.last_pos = self.current_pos
+
             else:
                 to_home_path.sort(key=lambda lst: lst['value'], reverse=True)
                 self.current_pos = to_home_path[0]["coordinates"]
@@ -75,7 +76,7 @@ class Ant(Agent):
                     if (self.check_grid_limits(pos_x, pos_y)):
                         continue
 
-                    if food_path := Grids().grid_to_food.item((self.current_pos[0] -1) + pos_x, (self.current_pos[1] -1) + pos_y):                        
+                    elif food_path := Grids().grid_to_food.item((self.current_pos[0] -1) + pos_x, (self.current_pos[1] -1) + pos_y):                        
                         to_food_path.append({ 
                             "coordinates": [(self.current_pos[0] -1) + pos_x, (self.current_pos[1] -1) + pos_y], 
                             "value": food_path
@@ -86,35 +87,36 @@ class Ant(Agent):
                         "value": Grids().grid_to_home.item((self.current_pos[0] -1) + pos_x, (self.current_pos[1] -1) + pos_y)
                     })
 
-            self.last_pos = self.current_pos
+
 
             temp_to_home = Grids().grid_to_home
             temp_to_home[self.last_pos[0], self.last_pos[1]] += 1
             Grids().grid_to_home = temp_to_home
 
-            display_message(self.aid.localname, f"Food path possui {len(to_food_path)} elementos")
+            self.last_pos = self.current_pos
 
             if find_food:
                 self.carrying = True
                 self.current_pos = find_food
-                self.last_pos = self.current_pos
+
             elif len(to_food_path) > 0:
                 to_food_path.sort(key=lambda lst: lst['value'], reverse=True)
                 self.current_pos = to_food_path[0]["coordinates"]
-                display_message(self.aid.localname, "Pelo feromonio")
+
             else:
                 to_home_path.sort(key=lambda lst: lst['value'])
                 no_pheromones = list(filter(lambda lst: lst['value'] == 0, to_home_path))
+                
                 if len(no_pheromones) > 0:
                     self.current_pos = choice(no_pheromones)["coordinates"]
-                    display_message(self.aid.localname, "Sem nenhum feromonio")
+
                 else:
                     self.current_pos = to_home_path[0]["coordinates"]
-                    display_message(self.aid.localname, "Com feromonio de volta pra casa")
+
 
     def check_grid_limits(self, pos_x, pos_y):
-        if (self.last_pos[0] -1) + pos_x == self.last_pos[0] and \
-            (self.last_pos[1] -1) + pos_y == self.last_pos[1]:
+        if (self.current_pos[0] -1) + pos_x == self.last_pos[0] and \
+            (self.current_pos[1] -1) + pos_y == self.last_pos[1]:
             return True
         elif (self.current_pos[0] -1) + pos_x == self.current_pos[0] and \
             (self.current_pos[1] -1) + pos_y == self.current_pos[1]:
