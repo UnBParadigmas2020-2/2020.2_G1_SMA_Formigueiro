@@ -5,7 +5,7 @@ from pade.acl.aid import AID
 from pade.behaviours.protocols import TimedBehaviour
 from src.agents.Canvas import CanvasAgent
 from src.agents.Ant import Ant
-from src.agents.Ambient import Ambient
+from src.agents.Environment import EnvironmentAgent
 from src.grid.grid import Grids
 from sys import argv
 import numpy as np
@@ -29,7 +29,7 @@ if __name__ == '__main__':
         c += 2
 
     agents.append(CanvasAgent(AID(name="Canvas_Agent")))
-    agents.append(Ambient(AID(name="Ambient_Agent")))
+    agents.append(EnvironmentAgent(AID(name="Environment_Agent")))
 
     start_loop(agents)
 

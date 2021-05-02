@@ -1,6 +1,7 @@
 from random import choice
 from pade.core.agent import Agent
 from ..grid.grid import Grids
+from ..settings import  AGENT_TIME
 from pade.behaviours.protocols import TimedBehaviour
 
 
@@ -14,17 +15,21 @@ class ComportTemporal(TimedBehaviour):
 
 
 class EnvironmentAgent(Agent):
-    def __init__(self, aid, dimension=(30, 30)):
+    def __init__(self, aid):
         super(EnvironmentAgent, self).__init__(aid=aid)
-        x = range(0, dimension[0])
-        y = range(0, dimension[1])
-        self.food_position = [choice(x), choice(y)]
-        self.anthill_position = [choice(x), choice(y)]
-        self.behaviours.append(ComportTemporal(self, 1.))
+        self.count = 0
+        self.evaporate_time = int(Grids().limit * 3.5)
+
+        self.behaviours.append(ComportTemporal(self, AGENT_TIME))
 
     def decrease_pheromone(self):
-        temp_to_food = Grids().grid_to_food
-        for i in range(len(temp_to_food)):
-            for j in range(len(temp_to_food[0])):
-                if temp_to_food[i][j] >= 1:
-                    temp_to_food[i][j] -= 1
+        if self.count == self.evaporate_time:
+            for index_x, x in enumerate(Grids().grid_to_home):
+                for index_y, y in enumerate(x):
+                    if Grids().grid_to_home[index_x, index_y] > 0:
+                        Grids().grid_to_home[index_x, index_y] -= 1
+                    if Grids().grid_to_food[index_x, index_y] > 0:
+                        Grids().grid_to_food[index_x, index_y] -= 1
+            self.count = 0
+        
+        self.count += 1
