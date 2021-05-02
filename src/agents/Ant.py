@@ -2,6 +2,7 @@ from random import choice
 from pade.core.agent import Agent
 from pade.misc.utility import display_message
 from ..grid.grid import Grids
+from ..grid.canvas import Canvas
 from pade.behaviours.protocols import TimedBehaviour
 
 
@@ -12,18 +13,16 @@ class ComportTemporal(TimedBehaviour):
     def on_time(self):
         super(ComportTemporal, self).on_time()
         self.agent.choose_path()
-        display_message(self.agent.aid.localname, self.agent.current_pos)
+        display_message(self.agent.aid.localname, f"Atual:: {self.agent.current_pos} Anterior:: {self.agent.last_pos}")
 
 class Ant(Agent):
-    position = 499
-
-    def __init__(self, aid, current_pos = [0,0]):
+    def __init__(self, aid, current_pos):
         super(Ant, self).__init__(aid=aid)
         self.carrying = False
         self.current_pos = current_pos
         self.last_pos = current_pos
 
-        comp_temp = ComportTemporal(self, .1)
+        comp_temp = ComportTemporal(self, .2)
 
         self.behaviours.append(comp_temp)
 
@@ -110,10 +109,10 @@ class Ant(Agent):
 
                 if len(no_pheromones) > 0:
                     self.current_pos = choice(no_pheromones)["coordinates"]
-
                 else:
                     self.current_pos = to_home_path[0]["coordinates"]
-
+            
+        Canvas().update_ant_position(self.last_pos, self.current_pos, Canvas().RED)
 
     def check_grid_limits(self, pos_x, pos_y):
         if (self.current_pos[0] -1) + pos_x == self.last_pos[0] and \
@@ -126,8 +125,8 @@ class Ant(Agent):
             return True
         elif ((self.current_pos[1] -1) + pos_y) < 0:
             return True
-        elif ((self.current_pos[0] -1) + pos_x) > Grids().limit:
+        elif ((self.current_pos[0] -1) + pos_x) >= Grids().limit:
             return True
-        elif ((self.current_pos[1] -1) + pos_y) > Grids().limit:
+        elif ((self.current_pos[1] -1) + pos_y) >= Grids().limit:
             return True
         return False

@@ -2,8 +2,7 @@
   "agent_files": [
       "main.py"
   ],
-  "port": 20000,
-  "num": 2,
+  "port": 8500,
   "pade_ams": {
       "launch": true,
       "host": "localhost",
