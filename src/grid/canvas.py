@@ -17,7 +17,8 @@ class Canvas:
         self._grid: np.array = np.zeros(shape=(Grids().limit, Grids().limit))
         self._lock = Lock()
         self._grid[Grids().initial_position[0], Grids().initial_position[1]] = self.BLACK
-        self._grid[Grids().food_position[0], Grids().food_position[1]] = self.GREEN
+        for food in Grids().food_positions:
+            self._grid[food[0], food[1]] = self.GREEN
 
     @property
     def grid(self):
@@ -30,6 +31,7 @@ class Canvas:
             self._grid[new_pos[0], new_pos[1]] = color
 
             self._grid[Grids().initial_position[0], Grids().initial_position[1]] = self.BLACK
-            self._grid[Grids().food_position[0], Grids().food_position[1]] = self.GREEN
+            for food in Grids().food_positions:
+                self._grid[food[0], food[1]] = self.GREEN
 
     
