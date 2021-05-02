@@ -10,7 +10,7 @@ class ComportTemporal(TimedBehaviour):
 
     def on_time(self):
         super(ComportTemporal, self).on_time()
-        self.agent.decrease()
+        self.agent.decrease_pheromone()
 
 
 class EnvironmentAgent(Agent):
@@ -22,7 +22,7 @@ class EnvironmentAgent(Agent):
         self.anthill_position = [choice(x), choice(y)]
         self.behaviours.append(ComportTemporal(self, 1.))
 
-    def decrease(self):
+    def decrease_pheromone(self):
         temp_to_food = Grids().grid_to_food
         for i in range(len(temp_to_food)):
             for j in range(len(temp_to_food[0])):
