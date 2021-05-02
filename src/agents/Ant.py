@@ -30,6 +30,7 @@ class Ant(Agent):
     def choose_path(self):
         to_food_path = []
         to_home_path = []
+        last_pos = self.current_pos
         find_food = None
         find_home = None
 
@@ -44,27 +45,35 @@ class Ant(Agent):
                     if (self.check_grid_limits(pos_x, pos_y)):
                         continue
 
+                    to_food_path.append({ 
+                        "coordinates": [(self.current_pos[0] -1) + pos_x, (self.current_pos[1] -1) + pos_y], 
+                        "value": Grids().grid_to_food.item((self.current_pos[0] -1) + pos_x, (self.current_pos[1] -1) + pos_y)
+                    })
+
                     to_home_path.append({ 
                         "coordinates": [(self.current_pos[0] -1) + pos_x, (self.current_pos[1] -1) + pos_y], 
                         "value": Grids().grid_to_home.item((self.current_pos[0] -1) + pos_x, (self.current_pos[1] -1) + pos_y)
                     })
 
-            temp_to_food = Grids().grid_to_food
-            temp_to_food[self.current_pos[0], self.current_pos[1]] += 1
-            Grids().grid_to_food = temp_to_food
-
             self.last_pos = self.current_pos
+            last_pos = self.current_pos
 
 
             if find_home:
                 self.last_pos = find_home
                 self.carrying = False
                 self.current_pos = find_home
- 
             else:
-                to_home_path.sort(key=lambda lst: lst['value'], reverse=True)
-                to_home_path = [position for position in to_home_path if position['value'] == to_home_path[0]['value']]
-                self.current_pos = choice(to_home_path)["coordinates"]
+                temp_to_home = list(filter(lambda lst: lst['value'] > 0, to_home_path))
+
+                if len(temp_to_home) > 0:
+                    self.current_pos = self.get_optimal_path(temp_to_home, to_food_path)['coordinates']
+                else:
+                    self.current_pos = self.get_optimal_path(to_home_path, to_food_path)['coordinates']
+
+            temp_to_food = Grids().grid_to_food
+            temp_to_food[self.current_pos[0], self.current_pos[1]] += 1
+            Grids().grid_to_food = temp_to_food
 
         # Procurando comida
         else:
@@ -89,11 +98,8 @@ class Ant(Agent):
                         "value": Grids().grid_to_home.item((self.current_pos[0] -1) + pos_x, (self.current_pos[1] -1) + pos_y)
                     })
 
-            temp_to_home = Grids().grid_to_home
-            temp_to_home[self.current_pos[0], self.current_pos[1]] += 1
-            Grids().grid_to_home = temp_to_home
-
             self.last_pos = self.current_pos
+            last_post = self.last_pos
 
             if find_food:
                 self.last_pos = find_food
@@ -112,9 +118,31 @@ class Ant(Agent):
                 if len(no_pheromones) > 0:
                     self.current_pos = choice(no_pheromones)["coordinates"]
                 else:
-                    self.current_pos = to_home_path[0]["coordinates"]
+                    self.current_pos = choice(list(filter(lambda lst: lst['value'] == to_home_path[0]['value'], to_home_path)))["coordinates"]
+
+            temp_to_home = Grids().grid_to_home
+            temp_to_home[self.current_pos[0], self.current_pos[1]] += 1
+            Grids().grid_to_home = temp_to_home
             
-        Canvas().update_ant_position(self.last_pos, self.current_pos, Canvas().RED)
+        Canvas().update_ant_position(last_pos, self.current_pos, Canvas().RED)
+
+    def get_optimal_path(self, to_home_path: list, to_food_path):
+        optimal_path = None
+        optimal_paths = []
+        to_home_path.sort(key = lambda lst: lst['value'], reverse= True)
+
+        for path in to_home_path:
+            if len(list(filter(lambda lst: lst['value'] > 0 and lst['coordinates'] == path['coordinates'], to_food_path))) > 0:
+                continue
+            optimal_paths.append(path)
+        
+        if len(optimal_paths) > 0:
+            optimal_paths.sort(key= lambda lst: lst['value'], reverse= True)
+            optimal_path = choice(list(filter(lambda lst: lst['value'] == optimal_paths[0]['value'], optimal_paths)))
+        else:
+            optimal_path = choice(list(filter(lambda lst: lst['value'] == to_home_path[0]['value'], to_home_path)))
+        
+        return optimal_path
 
     def check_grid_limits(self, pos_x, pos_y):
         if (self.current_pos[0] -1) + pos_x == self.last_pos[0] and \
