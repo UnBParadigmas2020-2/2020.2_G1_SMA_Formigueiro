@@ -4,6 +4,7 @@ from pade.misc.utility import display_message
 from pade.behaviours.protocols import TimedBehaviour
 from ..grid.grid import Grids
 from ..grid.canvas import Canvas
+from ..settings import AGENT_TIME
 import pygame
 import sys
 
@@ -11,7 +12,7 @@ GREEN_COLOR = (0,255,0)
 BLACK_COLOR = (0, 0, 0)
 WHITE_COLOR = (255, 255, 255)
 PURPLE_COLOR = (255,0,255)
-YELLOW_COLOR = (255,255,0)
+YELLOW_COLOR = (102,102,0)
 RED_COLOR = (255,0,0)
 
 
@@ -37,7 +38,7 @@ class CanvasAgent(Agent):
         self.SCREEN = pygame.display.set_mode((self.size, self.size))
         self.CLOCK = pygame.time.Clock()
         self.SCREEN.fill(WHITE_COLOR)
-        self.behaviours.append(ComportTemporal(self, .2))
+        self.behaviours.append(ComportTemporal(self, AGENT_TIME))
     
     
     def draw_grid(self):
@@ -49,7 +50,21 @@ class CanvasAgent(Agent):
                 rect = pygame.Rect(index_x * 10, index_y * 10, blockSize, blockSize)
 
                 pygame.draw.rect(self.SCREEN, color, rect)
-
+                
+        for index_x, x in enumerate(Grids().grid_to_home):
+            for index_y, y in enumerate(x): 
+                if y:
+                    pygame.draw.circle(
+                        self.SCREEN, 
+                        PURPLE_COLOR, 
+                        ((index_x * 10) + 3, (index_y * 10) + 3), 2) 
+        for index_x, x in enumerate(Grids().grid_to_food):
+            for index_y, y in enumerate(x): 
+                if y:
+                    pygame.draw.circle(
+                        self.SCREEN, 
+                        YELLOW_COLOR, 
+                        ((index_x * 10) + 8, (index_y * 10) + 8), 2) 
 
     def get_color_by_grid_position(self, grid_value): 
         color = WHITE_COLOR
