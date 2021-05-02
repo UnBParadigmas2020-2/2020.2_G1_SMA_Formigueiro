@@ -3,6 +3,7 @@ from pade.core.agent import Agent
 from pade.misc.utility import display_message
 from ..grid.grid import Grids
 from ..grid.canvas import Canvas
+from ..settings import AGENT_TIME
 from pade.behaviours.protocols import TimedBehaviour
 
 
@@ -22,7 +23,7 @@ class Ant(Agent):
         self.current_pos = current_pos
         self.last_pos = current_pos
 
-        comp_temp = ComportTemporal(self, .2)
+        comp_temp = ComportTemporal(self, AGENT_TIME)
 
         self.behaviours.append(comp_temp)
 
@@ -87,9 +88,6 @@ class Ant(Agent):
                         "coordinates": [(self.current_pos[0] -1) + pos_x, (self.current_pos[1] -1) + pos_y], 
                         "value": Grids().grid_to_home.item((self.current_pos[0] -1) + pos_x, (self.current_pos[1] -1) + pos_y)
                     })
-
-
-            #display_message(self.aid.localname, f"Home path possui {len(to_food_path)} elementos : {(to_food_path)} last position: {self.last_pos}")
 
             temp_to_home = Grids().grid_to_home
             temp_to_home[self.current_pos[0], self.current_pos[1]] += 1
