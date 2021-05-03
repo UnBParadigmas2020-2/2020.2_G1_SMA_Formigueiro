@@ -17,13 +17,22 @@ Descreva o seu projeto em linhas gerais.
 
 ## Screenshots
 
-![](../assets/img1.png)
-![](../assets/img2.png)
-![](../assets/img3.png)
+Legenda das imagens:
+
+- __Cículo verde__: feromônio "para comida" 
+- __Cículo roxo__: feromônio "para xasa" 
+- __Quadrado verde__: local de comida
+- __Quadrado preto__: formigueiro
+- __Quadrado vermelho__: formiga
+
+![](./assets/img3.png)
+![](./assets/img2.png)
+![](./assets/img1.png)
 
 ## Instalação 
-**Linguagens**: xxxxxx<br>
-**Tecnologias**: xxxxxx<br>
+**Linguagens**: Python (3.8+)<br>
+**Tecnologias**: PADE, PyGame, NumPy<br>
+
 Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
 Insira um manual ou um script para auxiliar ainda mais.
 
@@ -31,10 +40,22 @@ Insira um manual ou um script para auxiliar ainda mais.
 Explique como usar seu projeto, caso haja algum passo a passo após o comando de execução.
 
 ## Vídeo
-Adicione 1 ou mais vídeos com a execução do projeto.
+
+O vídeo se encontra na raiz do repositório, com o nome `video.mp4`
 
 ## Outros 
-Quaisquer outras informações sobre seu projeto podem ser descritas a seguir.
+
+Conforme desenvolvemos o projeto, conseguimos observar alguns comportamentos, sendo dois bem interessantes:
+
+### Formação de caminhos 
+
+As formigas naturalmente formam caminhos do formigueiro até a comida, e vice-versa, seguindo os respectivos feromônios. 
+
+### Círculos da morte
+
+Também chamado de "Ant mill", ocorre quando as formigas perdem o rastro do feromônio para o formigueiro, e passam a seguir outras formigas também perdidas. Isso cria um círculo, onde eventualmente as formigas irão morrer de exaustão.
 
 ## Fontes
-Caso utilize materiais de terceiros, referencie-os adequadamente.
+
+- [Ants simulation](https://www.youtube.com/watch?v=81GQNPJip2Y)
+- [https://en.wikipedia.org/wiki/Ant_mill](https://en.wikipedia.org/wiki/Ant_mill)
