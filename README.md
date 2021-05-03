@@ -24,7 +24,7 @@
 Legenda das imagens:
 
 - __Cículo verde__: feromônio "para comida" 
-- __Cículo roxo__: feromônio "para xasa" 
+- __Cículo roxo__: feromônio "para casa" 
 - __Quadrado verde__: local de comida
 - __Quadrado preto__: formigueiro
 - __Quadrado vermelho__: formiga
@@ -38,21 +38,29 @@ Legenda das imagens:
 **Tecnologias**: PADE, PyGame<br>
 
 ### Passos
-* (RECOMENDADO) Criar uma env para rodar esse projeto.
-* (RECOMENDADO) Ativar essa env.
+* (RECOMENDADO) Criar uma venv para rodar esse projeto.
+* (RECOMENDADO) Ativar essa venv.
+
+* Para criar uma venv, execute o comando abaixo:
+
+```
+$ python -m venv venv
+```
+* E depois ative a venv com o comando (pode variar de acordo com o sistema operacional)
+
+```
+$ source venv/bin/activate 
+```
+
+> Se tudo deu certo, a palavra (venv) deve aparecer no seu terminal
+
 * Instale os pacotes necessários para rodar o projeto:
 
 ```
 $ pip install -r requirements.txt --user
 ```
-* Inicar projeto através do script run.sh:
-```
-$ sh run.sh
-# ou
-$ ./run.sh (é necessário permissão do usuário para ser executado)
-```
 
-* Caso queira executar sem o script, digite esse comando abaixo no terminal:
+* Digite esse comando abaixo no terminal:
 ```
 $ pade create-pade-db && pade start-runtime --config_file pade_config.json
 ```
@@ -65,6 +73,11 @@ Explique como usar seu projeto, caso haja algum passo a passo após o comando de
 O vídeo se encontra na raiz do repositório, com o nome `video.mp4`
 
 ## Outros 
+
+O comportamento das formigas segue algumas regras pré-estabelecidas: 
+
+- Uma formiga que está __procurando alimentos__ SEMPRE irá preferir um caminho com o feromônio "para comida". Caso não haja esse feromônio em volta dela, ela vai evitar o feromônio "para casa", andando aleatoriamente até encontrar a comida. Caso haja somente o feromônio "para casa" em volta dela, ela irá preferir o caminho com menor intensidade de feromônio.
+- Uma formiga que está __carregando um alimento__ SEMPRE irá preferir um caminho com o feromônio "para casa", evitando caminhos com o feromônio "para comida".
 
 Conforme desenvolvemos o projeto, conseguimos observar alguns comportamentos, sendo dois bem interessantes:
 

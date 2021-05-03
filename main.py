@@ -1,6 +1,5 @@
 from pade.misc.utility import display_message, start_loop
 from pade.core.agent import Agent
-from random import choice
 from pade.acl.aid import AID
 from pade.behaviours.protocols import TimedBehaviour
 from src.agents.Canvas import CanvasAgent

@@ -13,12 +13,10 @@ class Grids():
         self.limit = shape[0]
         self._lock = Lock()
         self.food_positions = [
-            #[10,10],
             [choice(list(range(CANVAS_SIZE - 1))), choice(list(range(CANVAS_SIZE - 1)))],
             [choice(list(range(CANVAS_SIZE - 1))), choice(list(range(CANVAS_SIZE - 1)))],
             [choice(list(range(CANVAS_SIZE - 1))), choice(list(range(CANVAS_SIZE - 1)))],
         ]
-        # self.initial_position = [1,1]
         self.initial_position = [choice(list(range(CANVAS_SIZE - 1))), choice(list(range(CANVAS_SIZE - 1)))]
         self._around_food = []
         self._around_base = []
