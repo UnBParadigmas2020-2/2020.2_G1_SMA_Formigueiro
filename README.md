@@ -34,22 +34,27 @@ Legenda das imagens:
 ![](./assets/img1.png)
 
 ## Instalação 
-**Linguagens**: Python (3.8*)<br>
+**Linguagens**: Python (3.8+)<br>
 **Tecnologias**: PADE, PyGame<br>
 
 ### Passos
-* (OPCIONAL) Criar uma env para rodar esse projeto.
-* (OPCIONAL) Ativar essa env.
+* (RECOMENDADO) Criar uma env para rodar esse projeto.
+* (RECOMENDADO) Ativar essa env.
 * Instale os pacotes necessários para rodar o projeto:
 
 ```
 $ pip install -r requirements.txt --user
 ```
-* Inicar projeto através do script run.sh
+* Inicar projeto através do script run.sh:
 ```
 $ sh run.sh
 # ou
 $ ./run.sh (é necessário permissão do usuário para ser executado)
+```
+
+* Caso queira executar sem o script, digite esse comando abaixo no terminal:
+```
+$ pade create-pade-db && pade start-runtime --config_file pade_config.json
 ```
 
 ## Uso 
