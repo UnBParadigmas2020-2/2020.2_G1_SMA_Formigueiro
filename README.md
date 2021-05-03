@@ -18,8 +18,6 @@
 
   Na escolha entre os caminhos possíveis, a formiga terá preferencia por caminhos com o feromônio que aponta para o local que ela está procurando, dentre eles o caminho que tem a maior intensidade do feromônio desejado, se ela não tiver nenhum caminho disponível com o feromônio desejado, ela ira dar preferencia para caminhos que não contem o feromônio indesejado, para diminuir as chances do círculo da morte*.
 
-* Círculo da morte: efeito em que uma formiga se perde, e começa a andar em círculos aumentando a intensidade de feromônio no caminho, e quando outra formiga encontra esse caminho com grande quantidade de feromônio, ela também se junta a ele, liberando ainda mais feromônios, formando um circulo onde elas caminham até a morte.
-
 
 ## Screenshots
 
