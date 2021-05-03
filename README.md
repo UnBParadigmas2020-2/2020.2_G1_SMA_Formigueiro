@@ -34,11 +34,23 @@ Legenda das imagens:
 ![](./assets/img1.png)
 
 ## Instalação 
-**Linguagens**: Python (3.8+)<br>
-**Tecnologias**: PADE, PyGame, NumPy<br>
+**Linguagens**: Python (3.8*)<br>
+**Tecnologias**: PADE, PyGame<br>
 
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
-Insira um manual ou um script para auxiliar ainda mais.
+### Passos
+* (OPCIONAL) Criar uma env para rodar esse projeto.
+* (OPCIONAL) Ativar essa env.
+* Instale os pacotes necessários para rodar o projeto:
+
+```
+$ pip install -r requirements.txt --user
+```
+* Inicar projeto através do script run.sh
+```
+$ sh run.sh
+# ou
+$ ./run.sh (é necessário permissão do usuário para ser executado)
+```
 
 ## Uso 
 Explique como usar seu projeto, caso haja algum passo a passo após o comando de execução.
