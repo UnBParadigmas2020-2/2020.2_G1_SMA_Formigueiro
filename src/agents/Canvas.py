@@ -46,25 +46,40 @@ class CanvasAgent(Agent):
         for index_x, x in enumerate(Canvas().grid):
             for index_y, y in enumerate(x):
                 color = self.get_color_by_grid_position(y)
-                
-                rect = pygame.Rect(index_x * 10, index_y * 10, blockSize, blockSize)
+                if color != RED_COLOR:    
+                    rect = pygame.Rect(index_x * 10, index_y * 10, blockSize, blockSize)
 
-                pygame.draw.rect(self.SCREEN, color, rect)
-                
+                    pygame.draw.rect(self.SCREEN, color, rect)
+                else:
+                    pygame.draw.circle(
+                        self.SCREEN, 
+                        RED_COLOR, 
+                        ((index_x * 10) + 5, (index_y * 10) + 5), 5)         
         for index_x, x in enumerate(Grids().grid_to_home):
             for index_y, y in enumerate(x): 
                 if y:
+                    size = min(int(y/5) + 1, 4) if [index_x, index_y] not in Grids()._around_base else 4
                     pygame.draw.circle(
                         self.SCREEN, 
                         PURPLE_COLOR, 
-                        ((index_x * 10) + 3, (index_y * 10) + 3), 2) 
+                        ((index_x * 10) + 3, (index_y * 10) + 3), size) 
+                        
         for index_x, x in enumerate(Grids().grid_to_food):
             for index_y, y in enumerate(x): 
                 if y:
+                    size = min(int(y/5) + 1, 4) if [index_x, index_y] not in Grids()._around_food else 4
                     pygame.draw.circle(
                         self.SCREEN, 
                         YELLOW_COLOR, 
-                        ((index_x * 10) + 8, (index_y * 10) + 8), 2) 
+                        ((index_x * 10) + 8, (index_y * 10) + 8), size)
+
+        for index_x, x in enumerate(Canvas().grid):
+            for index_y, y in enumerate(x):
+                color = self.get_color_by_grid_position(y)
+                if color != WHITE_COLOR:    
+                    rect = pygame.Rect(index_x * 10, index_y * 10, blockSize, blockSize)
+
+                    pygame.draw.rect(self.SCREEN, color, rect)
 
     def get_color_by_grid_position(self, grid_value): 
         color = WHITE_COLOR
